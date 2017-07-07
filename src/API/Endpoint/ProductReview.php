@@ -74,6 +74,8 @@ class ProductReview extends \ITS\Trustpilot\API\Endpoint
             'token'          => $this->getClient()->getAccessToken()->getValue()
         ]);
 
-        return $this->getClient()->post($this->getRoute(__FUNCTION__), $params);;
+        return $this->getClient()->post($this->getRoute(__FUNCTION__), $params);
     }
+
+
 }

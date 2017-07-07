@@ -6,8 +6,9 @@ namespace ITS\Trustpilot\API;
  * Client class, base level access
  *
  * @method \ITS\Trustpilot\API\Endpoint\OAuth2 oauth2()
- * @method \ITS\Trustpilot\API\Endpoint\ServiceReview serviceReview(string $businessUnitId)
- * @method \ITS\Trustpilot\API\Endpoint\ProductReview productReview(string $businessUnitId)
+ * @method \ITS\Trustpilot\API\Endpoint\ServiceReview serviceReviews(string $businessUnitId)
+ * @method \ITS\Trustpilot\API\Endpoint\ProductReview productReviews(string $businessUnitId)
+ * @method \ITS\Trustpilot\API\Endpoint\Product products(string $businessUnitId)
  *
  */
 class HttpClient
@@ -48,9 +49,10 @@ class HttpClient
      * @var array
      */
     protected $endpoint_map = [
-        'oauth2'        => \ITS\Trustpilot\API\Endpoint\OAuth2::class,
-        'serviceReview' => \ITS\Trustpilot\API\Endpoint\ServiceReview::class,
-        'productReview' => \ITS\Trustpilot\API\Endpoint\ProductReview::class,
+        'oauth2'         => \ITS\Trustpilot\API\Endpoint\OAuth2::class,
+        'serviceReviews' => \ITS\Trustpilot\API\Endpoint\ServiceReview::class,
+        'productReviews' => \ITS\Trustpilot\API\Endpoint\ProductReview::class,
+        'products'       => \ITS\Trustpilot\API\Endpoint\Product::class,
     ];
 
     /**
