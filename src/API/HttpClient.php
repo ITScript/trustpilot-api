@@ -6,6 +6,8 @@ namespace ITS\Trustpilot\API;
  * Client class, base level access
  *
  * @method \ITS\Trustpilot\API\Endpoint\OAuth2 oauth2()
+ * @method \ITS\Trustpilot\API\Endpoint\ServiceReview serviceReview(string $businessUnitId)
+ * @method \ITS\Trustpilot\API\Endpoint\ProductReview productReview(string $businessUnitId)
  *
  */
 class HttpClient
@@ -46,7 +48,9 @@ class HttpClient
      * @var array
      */
     protected $endpoint_map = [
-        'oauth2' => \ITS\Trustpilot\API\Endpoint\OAuth2::class,
+        'oauth2'        => \ITS\Trustpilot\API\Endpoint\OAuth2::class,
+        'serviceReview' => \ITS\Trustpilot\API\Endpoint\ServiceReview::class,
+        'productReview' => \ITS\Trustpilot\API\Endpoint\ProductReview::class,
     ];
 
     /**
@@ -65,20 +69,19 @@ class HttpClient
      * @param $name
      * @param $arguments
      *
-     * @return \ITS\Trustpilot\API\Endpoint
+     * @return object
      * @throws \Exception
      */
     public function __call($name, $arguments)
     {
         if ((array_key_exists($name, $this->endpoint_map))) {
-            /** @var \ITS\Trustpilot\API\Endpoint $className */
-            $className = $this->endpoint_map[$name];
-            $class     = new $className($this);
+            $endpoint  = new \ReflectionClass($this->endpoint_map[$name]);
+            $arguments = array_merge([$this], $arguments);
+
+            return $endpoint->newInstanceArgs($arguments);
         } else {
             throw new \Exception("No method called $name available in " . __CLASS__);
         }
-
-        return $class;
     }
 
     /**

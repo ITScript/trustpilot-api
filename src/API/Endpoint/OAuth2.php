@@ -5,11 +5,6 @@ namespace ITS\Trustpilot\API\Endpoint;
 class OAuth2 extends \ITS\Trustpilot\API\Endpoint
 {
     /**
-     * @var string
-     */
-    protected $apiBasePath = 'v1/';
-
-    /**
      * Declares routes to be used by this resource.
      */
     protected function setUpRoutes()
@@ -31,12 +26,12 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
      */
     public function obtainAccessToken(array $params = [])
     {
-        $params = array_merge($this->client->getGrantType()->getPayload(), $params);
-        $result = $this->client->post(
+        $params = array_merge($this->getClient()->getGrantType()->getPayload(), $params);
+        $result = $this->getClient()->post(
             $this->getRoute(__FUNCTION__),
             $params,
             [
-                'auth' => [$this->client->getGrantType()->getApiKey(), $this->client->getGrantType()->getApiSecret()]
+                'auth' => [$this->getClient()->getGrantType()->getApiKey(), $this->getClient()->getGrantType()->getApiSecret()]
             ]
         );
 
@@ -57,14 +52,14 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
     {
         $params = array_merge([
             'grant_type'    => \ITS\Trustpilot\API\OAuth2\GrantType::TYPE_REFRESH_TOKEN,
-            'refresh_token' => $this->client->getAccessToken()->getRefreshToken()
+            'refresh_token' => $this->getClient()->getAccessToken()->getRefreshToken()
         ], $params);
 
-        $result = $this->client->post(
+        $result = $this->getClient()->post(
             $this->getRoute(__FUNCTION__),
             $params,
             [
-                'auth' => [$this->client->getGrantType()->getApiKey(), $this->client->getGrantType()->getApiSecret()]
+                'auth' => [$this->getClient()->getGrantType()->getApiKey(), $this->getClient()->getGrantType()->getApiSecret()]
             ]
         );
 
@@ -84,9 +79,9 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
     public function revokeAccessToken(array $params = [])
     {
         $params = array_merge([
-            'token' => $this->client->getAccessToken()->getRefreshToken()
+            'token' => $this->getClient()->getAccessToken()->getRefreshToken()
         ], $params);
 
-        return $this->client->post($this->getRoute(__FUNCTION__), $params);
+        return $this->getClient()->post($this->getRoute(__FUNCTION__), $params);
     }
 }

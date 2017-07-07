@@ -58,9 +58,6 @@ abstract class Endpoint
      */
     public function __construct(\ITS\Trustpilot\API\HttpClient $client)
     {
-        $client->setApiUrl($this->getApiURL());
-        $client->setHeader('Content-Type', 'application/x-www-form-urlencoded');
-
         $this->client = $client;
 
         if (! isset($this->itemName)) {
@@ -80,6 +77,16 @@ abstract class Endpoint
         return "{$this->apiScheme}://{$this->apiDomain}:{$this->apiPort}/{$this->apiBasePath}";
     }
 
+    /**
+     * @return \ITS\Trustpilot\API\HttpClient
+     */
+    public function getClient()
+    {
+        $this->client->setApiUrl($this->getApiURL());
+        $this->client->setHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        return $this->client;
+    }
 
     /**
      * Return the item name using the name of the class (used for endpoints)
@@ -237,7 +244,7 @@ abstract class Endpoint
     /**
      * @param array $additionalRouteParams
      */
-    public function setAdditionalRouteParams($additionalRouteParams)
+    public function setAdditionalRouteParams(array $additionalRouteParams)
     {
         $this->additionalRouteParams = $additionalRouteParams;
     }
