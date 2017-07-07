@@ -16,6 +16,9 @@
             "ITS\\Trustpilot\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {"ITS\\Trustpilot\\": "tests/" }
+    },
     "require": {
         "php": ">=5.6",
         "guzzlehttp/guzzle": "~6.0"
