@@ -33,6 +33,8 @@ class Product extends \ITS\Trustpilot\API\Endpoint
     }
 
     /**
+     * @link https://developers.trustpilot.com/products-api#get-products
+     *
      * @param array $params
      *
      * @throws \Exception

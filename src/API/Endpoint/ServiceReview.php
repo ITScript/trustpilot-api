@@ -38,24 +38,7 @@ class ServiceReview extends \ITS\Trustpilot\API\Endpoint
     }
 
     /**
-     *  Example of request
-     *  {
-     *      "referenceId": "inv00001",
-     *      "name": "John Doe",
-     *      "tags": [
-     *          "tag1",
-     *          "tag2"
-     *      ],
-     *      "locale": "en-US",
-     *      "email": "john.doe@trustpilot.com",
-     *      "redirectUri": "http://trustpilot.com"
-     *  }
-     *
-     *  Example of response
-     *  {
-     *      "url": "https://www.trustpilot.com/evaluate-link/9ee95945f2aa3a748301efdc6b8b51d7",
-     *      "id": "9ee95945f2aa3a748301efdc6b8b51d7"
-     *  }
+     * @link https://developers.trustpilot.com/invitation-api#generate-service-review-invitation-link
      *
      * @param array $params
      *

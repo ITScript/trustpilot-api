@@ -19,6 +19,8 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
     }
 
     /**
+     * @link https://developers.trustpilot.com/authentication#password
+     *
      * @param array $params
      *
      * @throws \Exception
@@ -43,6 +45,8 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
     }
 
     /**
+     * @link https://developers.trustpilot.com/authentication
+     *
      * @param array $params
      *
      * @throws \Exception
@@ -71,6 +75,8 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
     }
 
     /**
+     * @link https://developers.trustpilot.com/authentication
+     *
      * @param array $params
      *
      * @throws \Exception

@@ -29,38 +29,12 @@ class ProductReview extends \ITS\Trustpilot\API\Endpoint
         parent::setUpRoutes();
         $this->setRoutes([
             'createInvitationLink' => 'private/product-reviews/business-units/{businessUnitId}/invitation-links?token={token}',
+            'findPrivate'          => 'private/product-reviews/business-units/{businessUnitId}/reviews?token={token}'
         ]);
     }
 
     /**
-     *  Example of request
-     *  {
-     *      "referenceId": "123ABC",
-     *      "locale": "en-US",
-     *      "products": [
-     *          {
-     *              "sku": "ABC-1234",
-     *              "name": "Metal Toy Car",
-     *              "mpn": "7TX1641",
-     *              "imageUrl": "http://www.mycompanystore.com/products/images/12345.jpg",
-     *              "productUrl": "http://www.mycompanystore.com/products/12345.htm",
-     *              "gtin": "01234567890",
-     *              "brand": "Acme"
-     *          },
-     *          ...
-     *      ],
-     *      "consumer": {
-     *          "email": "johndoe@somewhere.com",
-     *          "name": "John Doe"
-     *      },
-     *      "redirectUri": "https://www.example.com"
-     *  }
-     *
-     *  Example of response
-     *  {
-     *      "reviewUrl": "https://products.trustpilot.com/evaluate/i377afKxa7abY",
-     *      "reviewLinkId": "i9tafKx7abY"
-     *  }
+     * @link https://developers.trustpilot.com/product-reviews-api#create-product-review-invitation-link
      *
      * @param array $params
      *
@@ -77,5 +51,21 @@ class ProductReview extends \ITS\Trustpilot\API\Endpoint
         return $this->getClient()->post($this->getRoute(__FUNCTION__), $params);
     }
 
+    /**
+     * @link https://developers.trustpilot.com/product-reviews-api#get-private-product-reviews
+     *
+     * @param array $params
+     *
+     * @throws \Exception
+     * @return null|\stdClass
+     */
+    public function findPrivate(array $params = [])
+    {
+        $this->setAdditionalRouteParams([
+            'businessUnitId' => $this->businessUnitId,
+            'token'          => $this->getClient()->getAccessToken()->getValue()
+        ]);
 
+        return $this->getClient()->get($this->getRoute(__FUNCTION__), $params);
+    }
 }
