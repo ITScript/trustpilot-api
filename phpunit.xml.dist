@@ -10,4 +10,9 @@
         <env name="BUSINESS_UNIT_ID" value=""/>
         <const name="foo" value="bar"/>
     </php>
+    <testsuites>
+        <testsuite name="LiveTest">
+            <directory>tests/LiveTest</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
