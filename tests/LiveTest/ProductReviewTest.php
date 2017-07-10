@@ -28,15 +28,15 @@ class ProductReviewTest extends BaseTest
                 'referenceId' => 'TEST',
                 'locale'      => 'en-GB',
                 'consumer'    => [
-                    'email' => 'dev@itscript.com',
-                    'name'  => 'Dev ITScript'
+                    'email' => 'dev@acme.com',
+                    'name'  => 'dev acme'
                 ],
                 'products' => [
                     [
-                        'sku'        => 'V_TestOnlyThreePieceSet',
-                        'name'       => 'Test Only Maderno Freestanding Bath 1710 x 770mm',
-                        'imageUrl'   => 'http://www.bathrooms.com/images/p/freestanding_baths/F-210/F-210+Mars_Freestanding_Bath-bathrooms_com-scene-square-medium-white.jpg',
-                        'productUrl' => 'http://www.bathrooms.com/testonlythreepieceset'
+                        'sku'        => 'test-sku',
+                        'name'       => 'test-name',
+                        'imageUrl'   => 'http://lorempixel.com/500/500/cats/',
+                        'productUrl' => 'http://acme.com/test-url'
                     ]
                 ],
             ],
