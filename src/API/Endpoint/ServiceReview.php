@@ -54,4 +54,19 @@ class ServiceReview extends \ITS\Trustpilot\API\Endpoint
 
         return $result = $this->getClient()->post($this->getRoute(__FUNCTION__), $params);
     }
+
+    /**
+     * @link https://support.trustpilot.com/hc/en-us/articles/115004145087--Business-Generated-Links-for-developers-
+     *
+     * @param array $params
+     *
+     * @return string
+     */
+    public function createBusinessGeneratedLink(array $params = [])
+    {
+        $payload = \ITS\Trustpilot\API\Cypher::encryptPayload($params['payload'], $params['encrypt_key'], $params['auth_key']);
+        $domain  = $params['domain'];
+
+        return "https://www.trustpilot.com/evaluate-bgl/{$domain}?p={$payload}";
+    }
 }
