@@ -67,6 +67,10 @@ class ServiceReview extends \ITS\Trustpilot\API\Endpoint
         $payload = \ITS\Trustpilot\API\Cypher::encryptPayload($params['payload'], $params['encrypt_key'], $params['auth_key']);
         $domain  = $params['domain'];
 
+        if (!empty($params['embed']) && $params['embed']) {
+            return "https://www.trustpilot.com/evaluate-bgl/embed/{$domain}?p={$payload}";
+        }
+
         return "https://www.trustpilot.com/evaluate-bgl/{$domain}?p={$payload}";
     }
 }
