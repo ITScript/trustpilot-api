@@ -45,4 +45,12 @@ abstract class BaseTest extends TestCase
     {
         return getenv('BUSINESS_UNIT_ID');
     }
+
+    /**
+     * @return false|string
+     */
+    protected static function getLocale()
+    {
+        return getenv('LOCALE');
+    }
 }

@@ -8,7 +8,9 @@
         <env name="USERNAME" value=""/>
         <env name="PASSWORD" value=""/>
         <env name="BUSINESS_UNIT_ID" value=""/>
-        <const name="foo" value="bar"/>
+        <env name="PRODUCT_IMAGE_URL" value=""/>
+        <env name="PRODUCT_PAGE_URL" value=""/>
+        <env name="LOCALE" value=""/>
     </php>
     <testsuites>
         <testsuite name="LiveTest">
