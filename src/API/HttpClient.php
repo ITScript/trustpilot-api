@@ -9,7 +9,8 @@ namespace ITS\Trustpilot\API;
  * @method \ITS\Trustpilot\API\Endpoint\ServiceReview serviceReviews(string $businessUnitId)
  * @method \ITS\Trustpilot\API\Endpoint\ProductReview productReviews(string $businessUnitId)
  * @method \ITS\Trustpilot\API\Endpoint\Product products(string $businessUnitId)
- *
+ * @method \ITS\Trustpilot\API\Endpoint\BusinessUnit businessUnit(string $businessUnitId)
+ * @method \ITS\Trustpilot\API\Endpoint\Resource resource()
  */
 class HttpClient
 {
@@ -53,6 +54,8 @@ class HttpClient
         'serviceReviews' => \ITS\Trustpilot\API\Endpoint\ServiceReview::class,
         'productReviews' => \ITS\Trustpilot\API\Endpoint\ProductReview::class,
         'products'       => \ITS\Trustpilot\API\Endpoint\Product::class,
+        'businessUnit'   => \ITS\Trustpilot\API\Endpoint\BusinessUnit::class,
+        'resource'       => \ITS\Trustpilot\API\Endpoint\Resource::class,
     ];
 
     /**
