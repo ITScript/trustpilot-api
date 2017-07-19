@@ -28,15 +28,15 @@ class ProductReviewTest extends BaseTest
                 'referenceId' => 'TEST',
                 'locale'      => 'en-GB',
                 'consumer'    => [
-                    'email' => 'dev@acme.com',
-                    'name'  => 'dev acme'
+                    'email' => 'dev@example.com',
+                    'name'  => 'Firstname Lastname'
                 ],
                 'products' => [
                     [
                         'sku'        => 'test-sku',
                         'name'       => 'test-name',
-                        'imageUrl'   => 'http://lorempixel.com/500/500/cats/',
-                        'productUrl' => 'http://acme.com/test-url'
+                        'imageUrl'   => getenv('PRODUCT_IMAGE_URL'),
+                        'productUrl' => getenv('PRODUCT_PAGE_URL'),
                     ]
                 ],
             ],
