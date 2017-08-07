@@ -7,32 +7,32 @@ class AccessToken implements \Serializable
     /**
      * @var string
      */
-    protected $access_token;
+    protected $accessToken;
 
     /**
      * @var string
      */
-    protected $refresh_token;
+    protected $refreshToken;
 
     /**
      * @var \DateTimeImmutable
      */
-    protected $expiry_date;
+    protected $expiryDate;
 
     /**
-     * @param string $access_token
-     * @param string $refresh_token
-     * @param \DateTimeInterface $expiry_date
+     * @param string $accessToken
+     * @param string $refreshToken
+     * @param \DateTimeInterface $expiryDate
      */
-    public function __construct($access_token, $refresh_token, \DateTimeInterface $expiry_date)
+    public function __construct($accessToken, $refreshToken, \DateTimeInterface $expiryDate)
     {
-        $this->access_token  = $access_token;
-        $this->refresh_token = $refresh_token;
+        $this->accessToken  = $accessToken;
+        $this->refreshToken = $refreshToken;
 
-        if ($expiry_date instanceof \DateTimeImmutable) {
-            $this->expiry_date = $expiry_date;
+        if ($expiryDate instanceof \DateTimeImmutable) {
+            $this->expiryDate = $expiryDate;
         } else {
-            $this->expiry_date = new \DateTimeImmutable('@' . $expiry_date->getTimestamp());
+            $this->expiryDate = new \DateTimeImmutable('@' . $expiryDate->getTimestamp());
         }
     }
 
@@ -42,9 +42,9 @@ class AccessToken implements \Serializable
     public function serialize()
     {
         return serialize([
-            'access_token'  => $this->access_token,
-            'refresh_token' => $this->refresh_token,
-            'expiry_date'   => $this->expiry_date
+            'access_token'  => $this->accessToken,
+            'refresh_token' => $this->refreshToken,
+            'expiry_date'   => $this->expiryDate
         ]);
     }
 
@@ -53,7 +53,7 @@ class AccessToken implements \Serializable
      */
     public function unserialize($serialized)
     {
-        list($this->access_token, $this->refresh_token, $this->expiry_date) = unserialize($serialized);
+        list($this->accessToken, $this->refreshToken, $this->expiryDate) = unserialize($serialized);
     }
 
     /**
@@ -61,7 +61,7 @@ class AccessToken implements \Serializable
      */
     public function hasExpired()
     {
-        return $this->expiry_date->getTimestamp() < time();
+        return $this->expiryDate->getTimestamp() < time();
     }
 
     /**
@@ -69,12 +69,12 @@ class AccessToken implements \Serializable
      */
     public function getValue()
     {
-        return $this->access_token;
+        return $this->accessToken;
     }
 
     public function getRefreshToken()
     {
-        return $this->refresh_token;
+        return $this->refreshToken;
     }
 
     /**
@@ -83,6 +83,6 @@ class AccessToken implements \Serializable
      */
     public function getExpiryDate()
     {
-        return $this->expiry_date;
+        return $this->expiryDate;
     }
 }

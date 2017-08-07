@@ -2,15 +2,30 @@
 
 namespace ITS\Trustpilot\API;
 
+use GuzzleHttp\Psr7\LazyOpenStream;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Client;
+use Psr\Http\Message\StreamInterface;
+use ITS\Trustpilot\API\Endpoint\OAuth2;
+use ITS\Trustpilot\API\Endpoint\ServiceReview;
+use ITS\Trustpilot\API\Endpoint\ProductReview;
+use ITS\Trustpilot\API\Endpoint\Product;
+use ITS\Trustpilot\API\Endpoint\BusinessUnit;
+use ITS\Trustpilot\API\Endpoint\Resource;
+use ITS\Trustpilot\API\OAuth2\AccessToken;
+use ITS\Trustpilot\API\OAuth2\GrantType;
+
 /**
  * Client class, base level access
  *
- * @method \ITS\Trustpilot\API\Endpoint\OAuth2 oauth2()
- * @method \ITS\Trustpilot\API\Endpoint\ServiceReview serviceReviews(string $businessUnitId)
- * @method \ITS\Trustpilot\API\Endpoint\ProductReview productReviews(string $businessUnitId)
- * @method \ITS\Trustpilot\API\Endpoint\Product products(string $businessUnitId)
- * @method \ITS\Trustpilot\API\Endpoint\BusinessUnit businessUnit(string $businessUnitId)
- * @method \ITS\Trustpilot\API\Endpoint\Resource resource()
+ * @method OAuth2 oauth2()
+ * @method ServiceReview serviceReviews(string $businessUnitId)
+ * @method ProductReview productReviews(string $businessUnitId)
+ * @method Product products(string $businessUnitId)
+ * @method BusinessUnit businessUnit(string $businessUnitId)
+ * @method Resource resource()
  */
 class HttpClient
 {
@@ -27,22 +42,22 @@ class HttpClient
     protected $apiUrl = null;
 
     /**
-     * @var \GuzzleHttp\Client
+     * @var Client
      */
     protected $guzzle;
 
     /**
-     * @var \ITS\Trustpilot\API\HttpDebug
+     * @var HttpDebug
      */
     protected $debug;
 
     /**
-     * @var \ITS\Trustpilot\API\OAuth2\GrantType
+     * @var GrantType
      */
     protected $grantType;
 
     /**
-     * @var \ITS\Trustpilot\API\OAuth2\AccessToken
+     * @var AccessToken
      */
     protected $accessToken;
 
@@ -50,22 +65,22 @@ class HttpClient
      * @var array
      */
     protected $endpoint_map = [
-        'oauth2'         => \ITS\Trustpilot\API\Endpoint\OAuth2::class,
-        'serviceReviews' => \ITS\Trustpilot\API\Endpoint\ServiceReview::class,
-        'productReviews' => \ITS\Trustpilot\API\Endpoint\ProductReview::class,
-        'products'       => \ITS\Trustpilot\API\Endpoint\Product::class,
-        'businessUnit'   => \ITS\Trustpilot\API\Endpoint\BusinessUnit::class,
-        'resource'       => \ITS\Trustpilot\API\Endpoint\Resource::class,
+        'oauth2'         => OAuth2::class,
+        'serviceReviews' => ServiceReview::class,
+        'productReviews' => ProductReview::class,
+        'products'       => Product::class,
+        'businessUnit'   => BusinessUnit::class,
+        'resource'       => Resource::class,
     ];
 
     /**
      * HttpClient constructor.
-     * @param \ITS\Trustpilot\API\OAuth2\GrantType $grantType
+     * @param GrantType $grantType
      */
-    public function __construct(\ITS\Trustpilot\API\OAuth2\GrantType $grantType = null)
+    public function __construct(GrantType $grantType = null)
     {
-        $this->guzzle = new \GuzzleHttp\Client();
-        $this->debug  = new \ITS\Trustpilot\API\HttpDebug();
+        $this->guzzle = new Client();
+        $this->debug  = new HttpDebug();
 
         $this->grantType = $grantType;
     }
@@ -90,7 +105,7 @@ class HttpClient
     }
 
     /**
-     * @return \ITS\Trustpilot\API\OAuth2\GrantType
+     * @return GrantType
      */
     public function getGrantType()
     {
@@ -98,7 +113,7 @@ class HttpClient
     }
 
     /**
-     * @return \ITS\Trustpilot\API\OAuth2\AccessToken
+     * @return AccessToken
      */
     public function getAccessToken()
     {
@@ -112,10 +127,10 @@ class HttpClient
     }
 
     /**
-     * @param \ITS\Trustpilot\API\OAuth2\AccessToken|null $accessToken
+     * @param AccessToken|null $accessToken
      * @return $this
      */
-    public function setAccessToken(\ITS\Trustpilot\API\OAuth2\AccessToken $accessToken = null)
+    public function setAccessToken(AccessToken $accessToken = null)
     {
         $this->accessToken = $accessToken;
 
@@ -178,7 +193,7 @@ class HttpClient
     /**
      * Returns debug information in an object
      *
-     * @return \ITS\Trustpilot\API\HttpDebug
+     * @return HttpDebug
      */
     public function getDebug()
     {
@@ -188,11 +203,11 @@ class HttpClient
     /**
      * Set debug information as an object
      *
-     * @param \GuzzleHttp\Psr7\Request|null $req
-     * @param \GuzzleHttp\Psr7\Response|null $res
+     * @param Request|null $req
+     * @param Response|null $res
      * @param \Exception|null $e
      */
-    public function debug(\GuzzleHttp\Psr7\Request $req = null, \GuzzleHttp\Psr7\Response $res = null, \Exception $e = null)
+    public function debug(Request $req = null, Response $res = null, \Exception $e = null)
     {
         $this->debug->lastRequestHeaders  = $req->getHeaders();
         $this->debug->lastRequestBody     = $req->getBody();
@@ -285,10 +300,10 @@ class HttpClient
             'User-Agent'   => $this->getUserAgent()
         ], $this->getHeaders());
 
-        /** @var \GuzzleHttp\Psr7\Request $request */
-        $request = new \GuzzleHttp\Psr7\Request($options['method'], $this->getApiUrl() . $endPoint, $headers);
+        /** @var Request $request */
+        $request = new Request($options['method'], $this->getApiUrl() . $endPoint, $headers);
 
-        /** @var \GuzzleHttp\Psr7\Response $response */
+        /** @var Response $response */
         $response = null;
 
         $requestOptions = [];
@@ -305,10 +320,10 @@ class HttpClient
 
             $request = $request->withBody(\GuzzleHttp\Psr7\stream_for($resource));
         } elseif (! empty($options['file'])) {
-            if ($options['file'] instanceof \Psr\Http\Message\StreamInterface) {
+            if ($options['file'] instanceof StreamInterface) {
                 $request = $request->withBody($options['file']);
             } elseif (is_file($options['file'])) {
-                $fileStream = new \GuzzleHttp\Psr7\LazyOpenStream($options['file'], 'r');
+                $fileStream = new LazyOpenStream($options['file'], 'r');
                 $request    = $request->withBody($fileStream);
             }
         }
@@ -327,8 +342,8 @@ class HttpClient
 
         try {
             $response = $this->guzzle->send($request, $requestOptions);
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            throw \GuzzleHttp\Exception\RequestException::create($e->getRequest(), $e->getResponse(), $e);
+        } catch (RequestException $e) {
+            throw RequestException::create($e->getRequest(), $e->getResponse(), $e);
         } finally {
             $this->debug($request, $response, isset($e) ? $e : null);
 

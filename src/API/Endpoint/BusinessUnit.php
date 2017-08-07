@@ -2,7 +2,10 @@
 
 namespace ITS\Trustpilot\API\Endpoint;
 
-class BusinessUnit extends \ITS\Trustpilot\API\Endpoint
+use ITS\Trustpilot\API\Endpoint;
+use ITS\Trustpilot\API\HttpClient;
+
+class BusinessUnit extends Endpoint
 {
     /**
      * @var string
@@ -11,10 +14,10 @@ class BusinessUnit extends \ITS\Trustpilot\API\Endpoint
 
     /**
      * BusinessUnit constructor.
-     * @param \ITS\Trustpilot\API\HttpClient $client
-     * @param string                         $businessUnitId
+     * @param HttpClient $client
+     * @param string     $businessUnitId
      */
-    public function __construct(\ITS\Trustpilot\API\HttpClient $client, $businessUnitId)
+    public function __construct(HttpClient $client, $businessUnitId)
     {
         parent::__construct($client);
 

@@ -2,7 +2,11 @@
 
 namespace ITS\Trustpilot\API\Endpoint;
 
-class OAuth2 extends \ITS\Trustpilot\API\Endpoint
+use ITS\Trustpilot\API\Endpoint;
+use ITS\Trustpilot\API\OAuth2\AccessToken;
+use ITS\Trustpilot\API\OAuth2\GrantType;
+
+class OAuth2 extends Endpoint
 {
     /**
      * Declares routes to be used by this resource.
@@ -24,7 +28,7 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
      * @param array $params
      *
      * @throws \Exception
-     * @return \ITS\Trustpilot\API\OAuth2\AccessToken
+     * @return AccessToken
      */
     public function obtainAccessToken(array $params = [])
     {
@@ -37,7 +41,7 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
             ]
         );
 
-        return $o = new \ITS\Trustpilot\API\OAuth2\AccessToken(
+        return $o = new AccessToken(
             $result->access_token,
             $result->refresh_token,
             new \DateTime('@' . (time() + $result->expires_in))
@@ -50,12 +54,12 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
      * @param array $params
      *
      * @throws \Exception
-     * @return \ITS\Trustpilot\API\OAuth2\AccessToken
+     * @return AccessToken
      */
     public function refreshAccessToken(array $params = [])
     {
         $params = array_merge([
-            'grant_type'    => \ITS\Trustpilot\API\OAuth2\GrantType::TYPE_REFRESH_TOKEN,
+            'grant_type'    => GrantType::TYPE_REFRESH_TOKEN,
             'refresh_token' => $this->getClient()->getAccessToken()->getRefreshToken()
         ], $params);
 
@@ -67,7 +71,7 @@ class OAuth2 extends \ITS\Trustpilot\API\Endpoint
             ]
         );
 
-        return $o = new \ITS\Trustpilot\API\OAuth2\AccessToken(
+        return $o = new AccessToken(
             $result->access_token,
             $result->refresh_token,
             new \DateTime('@' . (time() + $result->expires_in))

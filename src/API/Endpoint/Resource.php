@@ -2,7 +2,9 @@
 
 namespace ITS\Trustpilot\API\Endpoint;
 
-class Resource extends \ITS\Trustpilot\API\Endpoint
+use ITS\Trustpilot\API\Endpoint;
+
+class Resource extends Endpoint
 {
     /**
      * Declares routes to be used by this resource.
