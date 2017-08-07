@@ -2,7 +2,11 @@
 
 namespace ITS\Trustpilot\API\Endpoint;
 
-class ServiceReview extends \ITS\Trustpilot\API\Endpoint
+use ITS\Trustpilot\API\Endpoint;
+use ITS\Trustpilot\API\HttpClient;
+use ITS\Trustpilot\API\Cypher;
+
+class ServiceReview extends Endpoint
 {
     /**
      * @var string
@@ -16,10 +20,10 @@ class ServiceReview extends \ITS\Trustpilot\API\Endpoint
 
     /**
      * Invitation constructor.
-     * @param \ITS\Trustpilot\API\HttpClient $client
-     * @param string                         $businessUnitId
+     * @param HttpClient $client
+     * @param string     $businessUnitId
      */
-    public function __construct(\ITS\Trustpilot\API\HttpClient $client, $businessUnitId)
+    public function __construct(HttpClient $client, $businessUnitId)
     {
         parent::__construct($client);
 
@@ -64,7 +68,7 @@ class ServiceReview extends \ITS\Trustpilot\API\Endpoint
      */
     public function createBusinessGeneratedLink(array $params = [])
     {
-        $payload = \ITS\Trustpilot\API\Cypher::encryptPayload($params['payload'], $params['encrypt_key'], $params['auth_key']);
+        $payload = Cypher::encryptPayload($params['payload'], $params['encrypt_key'], $params['auth_key']);
         $domain  = $params['domain'];
 
         if (!empty($params['embed']) && $params['embed']) {

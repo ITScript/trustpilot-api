@@ -34,7 +34,7 @@ abstract class Endpoint
     protected $apiPort = 443;
 
     /**
-     * @var \ITS\Trustpilot\API\HttpClient
+     * @var HttpClient
      */
     protected $client;
 
@@ -54,9 +54,9 @@ abstract class Endpoint
     protected $additionalRouteParams = [];
 
     /**
-     * @param \ITS\Trustpilot\API\HttpClient $client
+     * @param HttpClient $client
      */
-    public function __construct(\ITS\Trustpilot\API\HttpClient $client)
+    public function __construct(HttpClient $client)
     {
         $this->client = $client;
 
@@ -78,7 +78,7 @@ abstract class Endpoint
     }
 
     /**
-     * @return \ITS\Trustpilot\API\HttpClient
+     * @return HttpClient
      */
     public function getClient()
     {
@@ -96,7 +96,7 @@ abstract class Endpoint
     protected function getItemNameFromClass()
     {
         $namespacedClassName = get_class($this);
-        $itemName            = join('', array_slice(explode('\\', $namespacedClassName), -1));
+        $itemName            = implode('', array_slice(explode('\\', $namespacedClassName), -1));
 
         $underscored = strtolower(preg_replace('/(?<!^)([A-Z])/', '_$1', $itemName));
 
@@ -217,8 +217,8 @@ abstract class Endpoint
      * Returns a route and replaces tokenized parts of the string with
      * the passed params
      *
-     * @param       $name
-     * @param array $params
+     * @param string $name
+     * @param array  $params
      *
      * @return mixed
      * @throws \Exception

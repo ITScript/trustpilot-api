@@ -2,7 +2,9 @@
 
 namespace ITS\Trustpilot\API\OAuth2\GrantType;
 
-class PasswordGrantType extends \ITS\Trustpilot\API\OAuth2\GrantType
+use ITS\Trustpilot\API\OAuth2\GrantType;
+
+class PasswordGrantType extends GrantType
 {
     /** @var  string */
     protected $username;
