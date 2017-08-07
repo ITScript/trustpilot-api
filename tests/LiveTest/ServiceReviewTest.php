@@ -11,6 +11,9 @@ class ServiceReviewTest extends BaseTest
     /** @var  HttpClient */
     protected $client;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $apiKey    = self::getEnvApiKey();
@@ -22,11 +25,30 @@ class ServiceReviewTest extends BaseTest
     }
 
     /**
-     * @covers ServiceReview::createInvitationLink
+     * @return \Generator
      */
-    public function testCreateInvitationLink()
+    public function dataCreateInvitationLink()
     {
-        $this->markTestIncomplete();
+        yield [
+            [
+                'referenceId' => 'TEST',
+                'locale'      => 'en-GB',
+                'email'       => 'dev@example.com',
+                'name'        => 'Firstname Lastname'
+            ]
+        ];
+    }
 
+    /**
+     * @covers       ServiceReview::createInvitationLink
+     * @dataProvider dataCreateInvitationLink
+     * @param array  $params
+     */
+    public function testCreateInvitationLink(array $params)
+    {
+        $result = $this->client->serviceReviews(self::getEnvBusinessUnitId())->createInvitationLink($params);
+
+        $this->assertAttributeNotEmpty('url', $result);
+        $this->assertAttributeNotEmpty('id', $result);
     }
 }

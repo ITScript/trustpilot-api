@@ -11,6 +11,9 @@ class ProductReviewTest extends BaseTest
     /** @var  HttpClient */
     protected $client;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $apiKey    = self::getEnvApiKey();
@@ -21,6 +24,9 @@ class ProductReviewTest extends BaseTest
         $this->client = new HttpClient(new PasswordGrantType($apiKey, $apiSecret, $username, $password));
     }
 
+    /**
+     * @return \Generator
+     */
     public function dataCreateInvitationLink()
     {
         yield [
@@ -47,7 +53,7 @@ class ProductReviewTest extends BaseTest
     /**
      * @covers       ProductReview::createInvitationLink
      * @dataProvider dataCreateInvitationLink
-     * @param array $params
+     * @param array  $params
      */
     public function testCreateInvitationLink(array $params)
     {
